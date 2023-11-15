@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import chromium from "@sparticuz/chromium";
 import fs from "fs-extra";
 import os from "os";
