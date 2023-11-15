@@ -23,9 +23,7 @@ client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
-const _$x = async (message, counter = 0, times = 1) => {
-  if (counter === times) return;
-
+const _$x = async (message) => {
   try {
     const commentImage = await getComment();
     const imageBuffer = Buffer.from(commentImage, "base64");
@@ -35,12 +33,10 @@ const _$x = async (message, counter = 0, times = 1) => {
     });
 
     await message.channel.send({ files: [attachment] });
-
-    return _$x(message, counter + 1, times);
   } catch (err) {
     console.error(err);
 
-    return _$x(message, counter, times);
+    return _$x(message);
   }
 };
 
@@ -50,7 +46,9 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (message.content === "$x") context.command = "$x$1";
   if (pattern.test(context.command)) {
-    await _$x(message, 0, parseInt(context.command.split("$x$")[1]));
+    const times = parseInt(context.command.split("$x$")[1]);
+
+    await Promise.all(Array.from({ length: times }).map(() => _$x(message)));
   }
 });
 
