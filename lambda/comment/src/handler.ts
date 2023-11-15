@@ -13,6 +13,10 @@ import * as comment from "./client/comment";
 import { getTemplate } from "./template/comment";
 
 export const getComment = async () => {
+  await chromium.font(
+    "https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf"
+  );
+
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
