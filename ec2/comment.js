@@ -8,22 +8,14 @@ const lambdaClient = new LambdaClient({
   region: process.env.AWS_REGION,
 });
 
-const getComment = async (attempts = 0) => {
-  if (attempts >= 10) throw new Error("Max attempts exceeded");
+module.exports.getComment = async () => {
+  const params = {
+    FunctionName: "cherry-comment",
+    Payload: Buffer.from(JSON.stringify({})),
+  };
 
-  try {
-    const params = {
-      FunctionName: "cherry-comment",
-      Payload: Buffer.from(JSON.stringify({})),
-    };
+  const command = new InvokeCommand(params);
+  const response = await lambdaClient.send(command);
 
-    const command = new InvokeCommand(params);
-    const response = await lambdaClient.send(command);
-
-    return JSON.parse(new TextDecoder("utf-8").decode(response.Payload)).body;
-  } catch (error) {
-    return getComment(attempts + 1);
-  }
+  return JSON.parse(new TextDecoder("utf-8").decode(response.Payload)).body;
 };
-
-module.exports.getComment = getComment;
