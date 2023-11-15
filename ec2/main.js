@@ -46,7 +46,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (message.content === "$x") context.command = "$x$1";
   if (pattern.test(context.command)) {
-    const times = parseInt(context.command.split("$x$")[1]);
+    const times = parseInt(context.command.slice(0, 4).split("$x$")[1]);
 
     await Promise.all(Array.from({ length: times }).map(() => _$x(message)));
   }
