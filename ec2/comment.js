@@ -8,7 +8,7 @@ const lambdaClient = new LambdaClient({
   region: process.env.AWS_REGION,
 });
 
-module.exports.getComment = async (attempts = 0) => {
+const getComment = async (attempts = 0) => {
   if (attempts >= 10) throw new Error("Max attempts exceeded");
 
   try {
@@ -25,3 +25,5 @@ module.exports.getComment = async (attempts = 0) => {
     return getComment(attempts + 1);
   }
 };
+
+module.exports.getComment = getComment;
