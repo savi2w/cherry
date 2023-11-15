@@ -42,7 +42,7 @@ const _$x = async (message) => {
 
 client.on(Events.MessageCreate, async (message) => {
   const context = { command: message.content };
-  const pattern = /\$x\$[0-9]/g;
+  const pattern = /\$x\$[1-9]/g;
 
   if (message.content === "$x") context.command = "$x$1";
   if (pattern.test(context.command)) {
