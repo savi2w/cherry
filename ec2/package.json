@@ -1,0 +1,12 @@
+{
+  "name": "cherry",
+  "version": "0.0.1",
+  "main": "main.js",
+  "author": "Weslen Guerreiro <savi2w@icloud.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-lambda": "^3.451.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1"
+  }
+}
