@@ -26,9 +26,9 @@ export const getComment = async () => {
 
   const fileName = path.join(os.tmpdir(), v4() + ".png");
   const page = await browser.newPage();
-  const post = await comment.getPostByCountry("BR");
+  const resp = await comment.getPostByCountry("BR");
 
-  await page.setContent(getTemplate(post));
+  await page.setContent(getTemplate(resp.post));
   await page.waitForNetworkIdle();
 
   const element = await page.$("#screenshot");
@@ -43,6 +43,9 @@ export const getComment = async () => {
 
   return {
     statusCode: 200,
-    body: file.toString("base64"),
+    body: JSON.stringify({
+      file: file.toString("base64"),
+      targetId: resp.targetId,
+    }),
   };
 };

@@ -25,11 +25,11 @@ client.once(Events.ClientReady, (c) => {
 
 const _$x = async (message) => {
   try {
-    const commentImage = await getComment();
-    const imageBuffer = Buffer.from(commentImage, "base64");
+    const comment = await getComment();
+    const imageBuffer = Buffer.from(comment.file, "base64");
 
     const attachment = new AttachmentBuilder(imageBuffer, {
-      name: "image.png",
+      name: comment.targetId + ".png",
     });
 
     await message.channel.send({ files: [attachment] });
@@ -46,9 +46,9 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (message.content === "$x") context.command = "$x$1";
   if (pattern.test(context.command)) {
-    const times = parseInt(context.command.slice(0, 4).split("$x$")[1]);
+    const length = parseInt(context.command.slice(0, 4).split("$x$")[1]);
 
-    await Promise.all(Array.from({ length: times }).map(() => _$x(message)));
+    await Promise.all(Array.from({ length }).map(() => _$x(message)));
   }
 });
 

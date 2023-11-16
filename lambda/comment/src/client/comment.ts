@@ -21,7 +21,9 @@ const getTargetId = async (): Promise<string> => {
   return targetId;
 };
 
-export const getPostByCountry = async (country: string): Promise<Post> => {
+export const getPostByCountry = async (
+  country: string
+): Promise<{ post: Post; targetId: string }> => {
   const targetId = await getTargetId();
   const { data } = await axios.post(
     getLocation(`/threads/video-comments/get-posts/top/${targetId}/0/0`),
@@ -55,5 +57,8 @@ export const getPostByCountry = async (country: string): Promise<Post> => {
     return getPostByCountry(country);
   }
 
-  return brazilianPosts[getRandomInt(brazilianPosts.length)];
+  return {
+    post: brazilianPosts[getRandomInt(brazilianPosts.length)],
+    targetId,
+  };
 };

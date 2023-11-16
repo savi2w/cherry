@@ -17,5 +17,7 @@ module.exports.getComment = async () => {
   const command = new InvokeCommand(params);
   const response = await lambdaClient.send(command);
 
-  return JSON.parse(new TextDecoder("utf-8").decode(response.Payload)).body;
+  return JSON.parse(
+    JSON.parse(new TextDecoder("utf-8").decode(response.Payload)).body
+  );
 };
